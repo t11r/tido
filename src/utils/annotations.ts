@@ -4,13 +4,13 @@ import { i18n } from '@/i18n';
 
 // utility functions that we can use as generic way for perform tranformation on annotations.
 
-export function addHighlightToElements(selector, root, annotationId) {
+export function addHighlightToElements(selector, root, annotationId) {  
   const selectedElements = selector
     .split(',')
     .map((selectorPart) => [...root.querySelectorAll(selectorPart.replace(':', '--'))])
     .flat();
 
-  if (selectedElements.length === 0) {
+  if (selectedElements.length === 0) {  
     return;
   }
 
@@ -151,11 +151,11 @@ export function generateTargetSelector(annotation) {
   return isValid ? result : null;
 }
 
-export function handleCssSelector(selector) {
+export function handleCssSelector(selector) {  
   return selector.value ?? null;
 }
 
-export function handleRangeSelector(selector) {
+export function handleRangeSelector(selector) {  
   const { startSelector, endSelector } = selector;
   if (startSelector && endSelector) {
     if (startSelector.type === 'CssSelector') {
