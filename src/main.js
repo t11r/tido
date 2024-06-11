@@ -9,6 +9,9 @@ import './css/style.css';
 import './css/style.scss';
 import { getRGBColor } from '@/utils/color';
 
+import { useToggle } from '@vueuse/core/index';
+import { isDark } from '@/utils/is-dark';
+
 const pinia = createPinia()
 
 function generateId() {
@@ -23,6 +26,8 @@ window.Tido = function Tido(config = {}) {
       return () => h(App);
     },
   });
+
+  console.log(App)
   this.app.provide('config', this.config);
   this.app.use(PrimeVue);
   this.app.use(pinia);
@@ -63,6 +68,18 @@ window.Tido = function Tido(config = {}) {
   const container = this.config?.container || '#app';
 
   this.mount(container);
+
+  this.setTheme = (name) => {
+    if (!name || name !== 'light' && name !== 'dark') return;
+    const toggleDark = useToggle(isDark);
+
+    let darkValue = false;
+    if (name === 'dark') darkValue = true;
+
+    console.log(darkValue);
+    toggleDark(false);
+
+  }
 };
 
 export default window.Tido;
