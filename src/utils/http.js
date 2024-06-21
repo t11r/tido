@@ -7,7 +7,7 @@ export async function request(url) {
 
     if (contentType.includes('application/json')) {
       return await response.json();
-    } if (contentType.includes('text')) {
+    } if (contentType.includes('xml') || contentType.includes('text')) {
       return response.text();
     }
   } catch ({ response }) {

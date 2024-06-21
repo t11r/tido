@@ -46,7 +46,7 @@ export const useAnnotationsStore = defineStore('annotations', () => {
         if (!newActiveAnnotation || activeAnnotations.value[id]) {
           return;
         }
-      
+        
         const iconName: string = configStore.getIconByType(newActiveAnnotation.body['x-content-type']);
 
         const activeAnnotationsList: ActiveAnnotation = { ...activeAnnotations.value };
@@ -68,7 +68,8 @@ export const useAnnotationsStore = defineStore('annotations', () => {
 
 
     const selectFilteredAnnotations = (types: AnnotationType[]): boolean | void => {
-        const configStore = useConfigStore()
+      console.log('types in selectFilteredAnnotations()', types)  
+      const configStore = useConfigStore()
         const activeContentType: string =  configStore.activeContentType  
         let filteredAnnotations: Annotation[] = [];
       
@@ -76,6 +77,7 @@ export const useAnnotationsStore = defineStore('annotations', () => {
           filteredAnnotations = types.length === 0 ? annotations.value : annotations.value.filter(
             (annotation) => {
               const type: AnnotationType = types.find(({ name }) => name === annotation.body['x-content-type']);
+              console.log('type of annotation', type)
               // First we check if annotation fits to the current view
               if (!type) return false;
       
@@ -84,9 +86,14 @@ export const useAnnotationsStore = defineStore('annotations', () => {
       
               // If the display is not dependent on displayWhen then we check if annotation's target exists in the content
               const selector: string = AnnotationUtils.generateTargetSelector(annotation);
+              console.log('selector of the annotated text', selector)
               if (selector) {
                 const el: HTMLElement = document.querySelector(selector);
                 if (el) {
+                  return true;
+                }
+                if (selector !== null) {
+                  // filter the 'Variant' type annotation, when selector is not null
                   return true;
                 }
               }
@@ -94,6 +101,7 @@ export const useAnnotationsStore = defineStore('annotations', () => {
               return false;
             },
           );
+          console.log('filtered Annotations', filteredAnnotations)
         }
         setFilteredAnnotations(filteredAnnotations)
     };
@@ -109,8 +117,8 @@ export const useAnnotationsStore = defineStore('annotations', () => {
         });
     };
 
-    const annotationLoaded = (annotations) => {
-        setAnnotations(annotations)
+    const annotationLoaded = (annotations) => { 
+      setAnnotations(annotations)
         updateAnnotationLoading(false)
     };
 

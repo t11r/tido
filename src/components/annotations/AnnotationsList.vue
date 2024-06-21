@@ -12,11 +12,21 @@
       ]"
       @click="isText(annotation) ? ()=>{} : toggle(annotation)"
     >
-      <div class="t-flex t-items-center t-space-x-2">
-        <AnnotationIcon v-if="!isText(annotation)" :name="getIconName(annotation.body['x-content-type'])" />
+      
+        <div v-if="!isVariant(annotation)" class="t-flex t-items-center t-space-x-2"> 
+          <AnnotationIcon v-if="!isText(annotation)" :name="getIconName(annotation.body['x-content-type'])" />
+          <span  v-html="annotation.body.value"/>
+        </div>
+
+        <div v-else v-for="variant in annotation.body.value" class="variant-item">
+          <span v-if="variant.witness" v-html="variant.witness" class="witness"/>
+          <span v-else  class="witness"> - </span>
+          <span v-html="variant.entry"/>
+        </div>
+       
         <!-- eslint-disable -- https://eslint.vuejs.org/rules/no-v-html.html -->
-        <span v-html="annotation.body.value" />
-      </div>
+    
+        
     </div>
   </div>
 </template>
@@ -59,4 +69,23 @@ function isText(annotation: Annotation): boolean {
 function getIconName(typeName: string): string {
   return props.types.find(({ name }) => name === typeName)?.icon || 'biPencilSquare';
 }
+
+function isVariant(annotation) {
+  return annotation.body['x-content-type'] === 'Variant';
+}
+
 </script>
+
+
+<style lang="scss" scoped>
+
+.variant-item {
+  display: flex;
+  align-items: center;
+}
+
+.variant-item .witness {
+  margin-right:25px;
+}
+
+</style>
