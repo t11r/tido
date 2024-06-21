@@ -4,25 +4,23 @@
       v-for="annotation in configuredAnnotations"
       :data-annotation-id="annotation.id"
       :key="annotation.id"
-      class="item"
-      :class="[
-        't-py-2 t-px-3 t-mb-1 t-rounded-md',
-        { 'hover:t-bg-gray-200 dark:hover:t-bg-gray-600 t-cursor-pointer': !isText(annotation) && !isActive(annotation) },
-        { 't-bg-gray-300 dark:t-bg-gray-600 active': isActive(annotation) }
-      ]"
-      @click="isText(annotation) ? ()=>{} : toggle(annotation)"
-    >
-      
-        <div v-if="!isVariant(annotation)" class="t-flex t-items-center t-space-x-2"> 
+    >    
+        <div v-if="!isVariant(annotation)" class="t-flex t-items-center t-space-x-2 item" :class="[
+            't-py-2 t-px-3 t-mb-1 t-rounded-md',
+            { 'hover:t-bg-gray-200 dark:hover:t-bg-gray-600 t-cursor-pointer': !isText(annotation) && !isActive(annotation) },
+            { 't-bg-gray-300 dark:t-bg-gray-600 active': isActive(annotation) }]"
+              @click="isText(annotation) ? ()=>{} : toggle(annotation)"> 
           <AnnotationIcon v-if="!isText(annotation)" :name="getIconName(annotation.body['x-content-type'])" />
           <span  v-html="annotation.body.value"/>
         </div>
 
-        <div v-else v-for="variant in annotation.body.value" class="variant-item">
-          <span v-if="variant.witness" v-html="variant.witness" class="witness"/>
-          <span v-else  class="witness"> - </span>
-          <span v-html="variant.entry"/>
-        </div>
+        <div v-else class="variants-list">
+          <div v-for="variant in annotation.body.value" class="variant-item">
+            <span v-if="variant.witness" v-html="variant.witness" class="witness"/>
+            <span v-else  class="witness"> - </span>
+            <span v-html="variant.entry"/>
+          </div>
+      </div>
        
         <!-- eslint-disable -- https://eslint.vuejs.org/rules/no-v-html.html -->
     
@@ -80,12 +78,16 @@ function isVariant(annotation) {
 <style lang="scss" scoped>
 
 .variant-item {
-  display: flex;
-  align-items: center;
+  margin-left: 5%;
 }
 
 .variant-item .witness {
-  margin-right:25px;
+  margin-right: 35%;
+}
+
+.variants-list {
+  display: flex;
+  flex-direction: column;
 }
 
 </style>
