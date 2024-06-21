@@ -2,14 +2,13 @@
   <div class="annotations-list t-overflow-auto">
     <div
       v-for="annotation in configuredAnnotations"
-      :data-annotation-id="annotation.id"
       :key="annotation.id"
     >    
         <div v-if="!isVariant(annotation)" class="t-flex t-items-center t-space-x-2 item" :class="[
             't-py-2 t-px-3 t-mb-1 t-rounded-md',
             { 'hover:t-bg-gray-200 dark:hover:t-bg-gray-600 t-cursor-pointer': !isText(annotation) && !isActive(annotation) },
             { 't-bg-gray-300 dark:t-bg-gray-600 active': isActive(annotation) }]"
-              @click="isText(annotation) ? ()=>{} : toggle(annotation)"> 
+              @click="isText(annotation) ? ()=>{} : toggle(annotation)" :data-annotation-id="annotation.id"> 
           <AnnotationIcon v-if="!isText(annotation)" :name="getIconName(annotation.body['x-content-type'])" />
           <span  v-html="annotation.body.value"/>
         </div>
