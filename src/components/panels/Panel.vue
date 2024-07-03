@@ -112,7 +112,6 @@ import PanelImageAction from '@/components/panels/actions/PanelImageAction.vue';
 import Loading from '@/components/Loading.vue';
 import Notification from '@/components/Notification.vue';
 import { findComponent } from '@/utils/panels';
-import TranslationViewVue from './TranslationView.vue';
 
 // NOTE: Using `setup()` rather than the recommended `<script setup>`
 // to avoid issues with asset loading.
@@ -314,14 +313,12 @@ export default {
 
     function createDefaultView(view) {
       const { connector, label } = view;
-      console.log('create Default View of:', view)
       const { component } = findComponent(connector.id);
       tabs.value = [...tabs.value, {
         component,
         label,
         props: { ...connector.options },
       }];
-      console.log('tabs', tabs.value)
     }
 
     function getContentUrl(type: string): string | null {
