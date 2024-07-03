@@ -103,6 +103,7 @@ import { useContentsStore } from '@/stores/contents';
 import MetadataView from '@/components/metadata/MetadataView.vue';
 import TreeView from '@/components/TreeView.vue';
 import AnnotationsView from '@/components/annotations/AnnotationsView.vue';
+import TranslationView from '@/components/TranslationView.vue';
 import ContentView from '@/components/ContentView.vue';
 import ImageView from '@/components/ImageView.vue';
 import PanelZoomAction from '@/components/panels/actions/PanelZoomAction.vue';
@@ -111,6 +112,7 @@ import PanelImageAction from '@/components/panels/actions/PanelImageAction.vue';
 import Loading from '@/components/Loading.vue';
 import Notification from '@/components/Notification.vue';
 import { findComponent } from '@/utils/panels';
+import TranslationViewVue from './TranslationView.vue';
 
 // NOTE: Using `setup()` rather than the recommended `<script setup>`
 // to avoid issues with asset loading.
@@ -118,6 +120,7 @@ export default {
   components: {
     AnnotationsView,
     ContentView,
+    TranslationView,
     ImageView,
     Loading,
     MetadataView,
@@ -311,12 +314,14 @@ export default {
 
     function createDefaultView(view) {
       const { connector, label } = view;
+      console.log('create Default View of:', view)
       const { component } = findComponent(connector.id);
       tabs.value = [...tabs.value, {
         component,
         label,
         props: { ...connector.options },
       }];
+      console.log('tabs', tabs.value)
     }
 
     function getContentUrl(type: string): string | null {
