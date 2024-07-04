@@ -184,6 +184,8 @@ export default {
         switch (component) {
           case 'ContentView':
             return createContentView(view, i);
+          case 'TranslationView':
+            return createContentView(view,i)
           case 'TreeView':
             return createTreeView(view, i);
           case 'MetadataView':
@@ -331,7 +333,6 @@ export default {
       }
 
       contentItem = item.value.content.find((c) => c.type.split('type=')[1] === type);
-
       return contentItem ? contentItem.url : null;
     }
 
