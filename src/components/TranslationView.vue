@@ -1,7 +1,6 @@
 <template>
     <div class="translation-text">
         <p v-html="content">  </p>
-        <p> Text to be added in the TranslationView </p>
     </div>
 </template>
 
@@ -37,8 +36,9 @@ watch(
 <style lang="scss" scoped>
 
 .translation-text {
-    margin-left:5%;
-    margin-top: 10px;
+  width: 280px;  
+  margin-left:3%;
+  margin-top: 10px;
 }
 
 </style>
